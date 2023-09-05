@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                echo 'The process of building the code is started'
+                sh 'mvn clean install'
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                echo 'Testing the first componenets'
+                echo 'Testing the remaining componenets'
+                echo 'Integration and Environment testing...done'
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                echo 'Initilising the code analysis...'
+                echo 'Performing the code analysis...'
+                echo 'code analysis in progress...'
+                echo 'code analysis done..'
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo 'Improving security of system by performing security scan...'
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Deploying to staging environment started'
+                echo 'completion of deployment'
+            }
+        }
+    }
+    
+    post {
+        always {
+            mail body: 'See the attachment for logs.',
+                subject: "Pipeline '${currentBuild.fullDisplayName}'",
+                to: 'info.amankag@gmail.com',  // Replace with your email address
+                attachmentsPattern: '**/target/*.log'
+        }
+    }
+}
